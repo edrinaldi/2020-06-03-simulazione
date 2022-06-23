@@ -9,6 +9,33 @@
 5a. costruisco la query per gli archi e la testo con i risultati dentro Sequel Pro
 5b. se necessario, creo la classe Adiacenza con attributi, costruttore, getter & setter, toString
 6. aggiungo gli archi al grafo
+7. svolgo PUNTO 1d ...
+8a. collego al controller
+	- per ogni metodo
+		- pulisco l'area di testo
+		- controllo i dati in input
+		- faccio i calcoli
+		- stampo il risultato
+8b. faccio i test
+9. commit & push del punto 1 finito
+10. PUNTO 2 ...
 
 ATTENZIONE
 - attributi private
+
+cerca(parziale, k):
+- if(size == k)
+	// soluzione totale
+	- if(this.titolarità(soluzione) > this.titolarità(this.dreamTeam))
+		- this.dreamTeam = new list(soluzione)
+	- return
+- per ogni vertice p
+	- if(!parziale.contains(p))	// se non è già presente in parziale
+		- provo ad inserirlo
+		- if(this.idoneo(p, parziale))	// se la soluzione è valida 
+			- algoritmo ricorsivo ...	// proseguo per questo ramo
+		- backtracking	// lo tolgo
+	
+calcolaTitolarita(team)
+
+isIdoneo(p, parziale)

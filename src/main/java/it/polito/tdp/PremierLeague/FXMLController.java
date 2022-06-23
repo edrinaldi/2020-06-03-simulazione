@@ -72,7 +72,34 @@ public class FXMLController {
 
     @FXML
     void doDreamTeam(ActionEvent event) {
-
+    	// pulisco l'area di testo
+    	this.txtResult.clear();
+    	
+    	// controllo il grafo
+    	if(!this.model.isGrafoCreato()) {
+    		this.txtResult.setText("Errore: devi prima creare il grafo.");
+    		return;
+    	}
+    	
+    	// controllo k
+    	int k = 0;
+    	try {
+    		k = Integer.parseInt(this.txtK.getText());
+    	}
+    	catch(NumberFormatException e) {
+    		e.printStackTrace();
+    		this.txtResult.setText("Errore: devi inserire un valore intero per k.");
+    		return;
+    	}
+    	
+    	// trovo il dream team
+    	List<Player> team = this.model.trovaDreamTeam(k);
+    	
+    	// stampo il risultato
+    	this.txtResult.setText("DREAM TEAM:\n");
+    	for(Player p : team) {
+    		this.txtResult.appendText(p.toString() + "\n");
+    	}
     }
 
     @FXML

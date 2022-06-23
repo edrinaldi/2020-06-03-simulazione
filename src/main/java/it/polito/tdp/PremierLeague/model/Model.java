@@ -17,6 +17,7 @@ public class Model {
 	private Graph<Player, DefaultWeightedEdge> grafo;
 	private Map<Integer, Player> idMap;
 	private PremierLeagueDAO dao;
+	private List<Player> dreamTeam;
 	
 	public Model() {
 		this.idMap = new HashMap<>();
@@ -94,5 +95,72 @@ public class Model {
 			return false;
 		}
 		return true;
+	}
+	
+	/*
+	 * dato un numero di giocatori k, trova il team con il maggior grado di titolarità
+	 */
+	public List<Player> trovaDreamTeam(int k) {
+		this.dreamTeam = new ArrayList<>();
+		List<Player> parziale = new ArrayList<>();
+		this.cerca(parziale, k);
+		return this.dreamTeam;
+	}
+	
+	private void cerca(List<Player> parziale, int k) {
+		// condizione di terminazione
+		if(parziale.size() == k) {
+			// soluzione totale
+			
+			// controllo soluzione ottima
+			if(this.calcolaTitolarita(parziale) > this.calcolaTitolarita(this.dreamTeam)) {
+				this.dreamTeam = new ArrayList<Player>(parziale);
+			}
+			return;
+		}
+		
+		for(Player p : this.grafo.vertexSet()) {
+			// se non è già presente, provo ad aggiungere il giocatore
+			if(!parziale.contains(p)) {
+				parziale.add(p);
+				
+				// controllo la soluzione parziale
+				if(this.isIdoneo(p, parziale)) {
+					// soluzione valida
+					this.cerca(parziale, k);
+				}
+				
+				// backtracking
+				parziale.remove(p);
+			}
+		}
+	}
+
+	private boolean isIdoneo(Player p, List<Player> parziale) {
+		for(Player pi : parziale) {
+			for(Player battuto : this.listaBattuti(pi)) {
+				if(p.equals(battuto)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	private int calcolaTitolarita(List<Player> team) {
+		int titolarita = 0;
+		for(Player p : team) {
+			int pesoUscenti = 0;
+			int pesoEntranti = 0;
+			
+			for(DefaultWeightedEdge e : this.grafo.outgoingEdgesOf(p)) {
+				pesoUscenti += this.grafo.getEdgeWeight(e);
+			}
+			for(DefaultWeightedEdge e : this.grafo.incomingEdgesOf(p)) {
+				pesoEntranti += this.grafo.getEdgeWeight(e);
+			}
+			titolarita += pesoUscenti-pesoEntranti;
+		}
+		return titolarita;
 	}
 }
