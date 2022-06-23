@@ -22,6 +22,8 @@
 
 ATTENZIONE
 - attributi private
+- nella ricorsione: nuova soluzione ottima -> new list(parziale)
+- nella ricorsione: soluzione ottima va inizializzata nel metodo dedicato
 
 cerca(parziale, k):
 - if(size == k)

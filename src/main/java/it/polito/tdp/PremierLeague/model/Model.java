@@ -147,7 +147,7 @@ public class Model {
 		return true;
 	}
 
-	private int calcolaTitolarita(List<Player> team) {
+	public int calcolaTitolarita(List<Player> team) {
 		int titolarita = 0;
 		for(Player p : team) {
 			int pesoUscenti = 0;

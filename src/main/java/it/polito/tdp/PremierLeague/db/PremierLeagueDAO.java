@@ -85,8 +85,8 @@ public class PremierLeagueDAO {
 	}
 
 	public List<Adiacenza> getArchi(double x){
-		String sql = "select a1.playerid as p1, a2.playerid as p2, "
-				+ "(sum(a1.timeplayed)-sum(a2.timeplayed)) as delta "
+		String sql = "select a1.playerid as p1, a2.playerid as p2, (sum(a1.timeplayed)-sum(a2.timeplayed)) "
+				+ "as delta "
 				+ "from actions a1, actions a2 "
 				+ "where a1.playerid in (select playerid "
 				+ "	from actions "
@@ -97,11 +97,12 @@ public class PremierLeagueDAO {
 				+ "	group by `PlayerID` "
 				+ "	having avg(`Goals`) > ?) "
 				+ "and a1.matchid=a2.matchid "
+				+ "and a1.playerid<>a2.playerid "
 				+ "and a1.teamid<>a2.`TeamID` "
 				+ "and a1.starts=1 "
 				+ "and a1.starts=a2.starts "
-				+ "and a1.timeplayed>a2.timeplayed "
-				+ "group by a1.playerid, a2.playerid";
+				+ "group by a1.playerid, a2.playerid "
+				+ "having delta>0";
 		List<Adiacenza> result = new ArrayList<>();
 		Connection conn = DBConnect.getConnection();
 

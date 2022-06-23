@@ -100,6 +100,7 @@ public class FXMLController {
     	for(Player p : team) {
     		this.txtResult.appendText(p.toString() + "\n");
     	}
+    	this.txtResult.appendText(String.format("Grado titolarità: %d", this.model.calcolaTitolarita(team)));
     }
 
     @FXML
