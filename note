@@ -1,0 +1,14 @@
+1a. importo il db
+1b. commit & push del progetto vuoto
+2. definisco il grafo e lo creo nel metodo apposito
+3a. costruisco la query per i vertici e la testo con i risultati dentro Sequel Pro
+3b. se necessario, modifico il metodo del dao con una idMap
+3c. aggiungo la idMap al Model e la riempio
+3d. creo il metodo per i vertici nel dao
+4. aggiungo i vertici al grafo
+5a. costruisco la query per gli archi e la testo con i risultati dentro Sequel Pro
+5b. se necessario, creo la classe Adiacenza con attributi, costruttore, getter & setter, toString
+6. aggiungo gli archi al grafo
+
+ATTENZIONE
+- attributi private

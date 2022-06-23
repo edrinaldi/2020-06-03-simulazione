@@ -5,9 +5,11 @@
 package it.polito.tdp.PremierLeague;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.PremierLeague.model.Model;
+import it.polito.tdp.PremierLeague.model.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -44,7 +46,28 @@ public class FXMLController {
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
-
+    	// pulisco l'area di testo
+    	this.txtResult.clear();
+    	
+    	// controllo x
+    	double x = 0;
+    	try {
+    		x = Double.parseDouble(this.txtGoals.getText());
+    	}
+    	catch(NumberFormatException e) {
+    		e.printStackTrace();
+    		this.txtResult.setText("Errore: devi interire un valore numerico per x.");
+    		return;
+    	}
+    	
+    	// creo il grafo
+    	this.model.creaGrafo(x);
+    	
+    	// stampo il risultato
+    	this.txtResult.setText(String.format("Grafo creato\n"
+    									   + "# VERTICI: %d\n"
+    									   + "# ARCHI: %d", this.model.nVertici(), 
+    									   this.model.nArchi()));
     }
 
     @FXML
@@ -54,7 +77,27 @@ public class FXMLController {
 
     @FXML
     void doTopPlayer(ActionEvent event) {
-
+    	// pulisco l'area di testo
+    	this.txtResult.clear();
+    	
+    	// controllo il grafo
+    	if(!this.model.isGrafoCreato()) {
+    		this.txtResult.setText("Errore: devi prima creare il grafo.");
+    		return;
+    	}
+    	
+    	// trovo il top player
+    	Player p = this.model.trovaTopPlayer();
+    	
+    	// trovo i giocatori battuti
+    	List<Player> battuti = this.model.listaBattuti(p);
+    	
+    	// stampo il risultato
+    	this.txtResult.setText(String.format("TOP PLAYER: %s\n\n", p.toString()));
+    	this.txtResult.appendText("AVVERSARI BATTUTI:\n");
+    	for(Player pi : battuti) {
+    		this.txtResult.appendText(pi.toString() + "\n");
+    	}
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
